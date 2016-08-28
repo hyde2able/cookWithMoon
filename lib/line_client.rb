@@ -197,7 +197,7 @@ class LineClient
     ).send(
       to_mid: @to_mid
     )
-    #support(step.content)
+    support(step.content)
   end
 
   # 次のステップがあるかどうか
@@ -229,7 +229,7 @@ class LineClient
       @client.rich_message.set_action(
         SHARE: {
           text: 'シェアしよう',
-          link_url: "#{HOST}/share/#{recipe.rid}",
+          link_url: "#{HOST}/recipe/#{recipe.rid}/share",
           type: 'web'        
         }
       ).add_listener(
@@ -245,17 +245,6 @@ class LineClient
       )
       end_cooking
     end  
-  end
-
-  def send_recipe recipe
-    @client.multiple_message.add_text(
-      text: recipe.name
-    ).add_image(
-      image_url: recipe.image,
-      preview_url: recipe.image
-    ).send(
-      to_mid: @to_mid
-    )
   end
 
   def send_giveup

@@ -49,7 +49,7 @@ namespace :recipes do
       result = JSON.parse(json)
       r = result['recipe']
 
-      #begin
+      begin
         Recipe.transaction do
           recipe.portion = r['membernum']
           recipe.time = r['time']
@@ -68,22 +68,20 @@ namespace :recipes do
               material.quantity_int = $1.to_i
             end
             material.recipe_id = recipe.id
-            p material
             material.save
           end
 
           r['process'].each_with_index do |pro, index|
             step = Step.new(image: pro['image'], content: pro['operation'], turn: index)
             step.recipe_id = recipe.id
-            p step
             step.save
           end
 
           p recipe if recipe.save
         end
-      #rescue
-      #  puts "#{recipe.id}を補完できませんでした。"
-      #end
+      rescue
+        puts "#{recipe.id}を補完できませんでした。"
+      end
     end
     puts "END"
   end
