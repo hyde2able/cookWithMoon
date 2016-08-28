@@ -3,7 +3,7 @@ class CreateTeches < ActiveRecord::Migration[5.0]
     create_table :teches do |t|
       t.string :name
       t.string :image
-      t.string :eexplanation
+      t.string :explanation
       t.integer :tech_type
 
       t.timestamps
