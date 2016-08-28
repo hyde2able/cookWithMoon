@@ -31,8 +31,6 @@ class WebhookController < ApplicationController
     end
   end
 
-  get '/tech-img/:tech/:id/:size', to: 'webhook#tech'
-
   def tech
     case params[:tech]
     when 'yaku', 'cut'
