@@ -15,7 +15,7 @@ class Crawler
   end
 
   def scrape
-    return unless is_allowed?
+    #return unless is_allowed?
     @doc.xpath('//*[@class="contentsBox"]/div[@class="catePopuRank"]/ol').each do |node|
       li_inner_recipe(node)
     end
