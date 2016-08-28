@@ -2,6 +2,7 @@ require 'line/bot'
 require 'RMagick'
 
 class WebhookController < ApplicationController
+  protect_from_forgery with: :null_session
 
   CHANNEL_ID = ENV['LINE_CHANNEL_ID']
   CHANNEL_SECRET = ENV['LINE_CHANNEL_SECRET']

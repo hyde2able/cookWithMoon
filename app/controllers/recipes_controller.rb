@@ -1,4 +1,5 @@
 class RecipesController < ApplicationController
+  protect_from_forgery with: :null_session
   def show
     @recipe = Recipe.find_by(rid: params[:rid])
     @steps = @recipe.steps
