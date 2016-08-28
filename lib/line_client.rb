@@ -3,28 +3,9 @@ require "faraday_middleware"
 require "json"
 require "pp"
 require 'line/bot'
-require "#{Rails.root}/lib/crawler"
 
 class LineClient
-  module ContentType
-    TEXT = 1
-    IMAGE = 2
-    VIDEO = 3
-    AUDIO = 4
-    LOCATION = 7
-    STICKER = 8
-    CONTACT = 10
-    RICH = 12
-  end
-  module ToType
-    USER = 1
-  end
-
   HOST = 'https://line2016.herokuapp.com'
-
-  END_POINT = "https://trialbot-api.line.me"
-  TO_CHANNEL = 1383378250 # this is fixed value
-  EVENT_TYPE = "138311608800106203" # this is fixed value
 
   def initialize(client, message)
     @client = client
@@ -216,7 +197,7 @@ class LineClient
     ).send(
       to_mid: @to_mid
     )
-    support(step.content)
+    #support(step.content)
   end
 
   # 次のステップがあるかどうか
