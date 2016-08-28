@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rid: MyString
+  cook: false
+  mid: MyString
+  name: MyString
+  now_step: 1
+  max_step: 1
+
+two:
+  rid: MyString
+  cook: false
+  mid: MyString
+  name: MyString
+  now_step: 1
+  max_step: 1
