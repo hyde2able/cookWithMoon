@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  image: MyString
+  name: MyString
+  rid: MyString
+  description: MyString
+  fee: MyString
+  fee_int: 1
+  time: MyString
+  time_int: 1
+  portion: MyString
+  portion_int: 1
+  main: 
+
+two:
+  image: MyString
+  name: MyString
+  rid: MyString
+  description: MyString
+  fee: MyString
+  fee_int: 1
+  time: MyString
+  time_int: 1
+  portion: MyString
+  portion_int: 1
+  main: 
