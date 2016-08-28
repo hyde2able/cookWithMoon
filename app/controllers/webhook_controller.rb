@@ -1,4 +1,5 @@
 require "#{Rails.root}/lib/line_client"
+require "#{Rails.root}/lib/crawler"
 require 'line/bot'
 require 'RMagick'
 
@@ -26,21 +27,16 @@ class WebhookController < ApplicationController
   def assets
     case params[:path]
     when 'next', 'share', 'giveup', 'ok'
-      open("#{Rails.root}/public/images/#{params[:path]}.jpg") do |data|
-        send_data(data.read, :disposition => "inline", :type => "image/jpeg")
-      end
+      send_image "#{Rails.root}/public/images/#{params[:path]}.jpg"
     end
   end
 
-  def cut
-    open("#{Rails.root}/public/images/cut/#{params[:id]}.jpg") do |data|
-      send_data(data.read, :disposition => "inline", :type => "image/jpeg")
-    end
-  end
+  get '/tech-img/:tech/:id/:size', to: 'webhook#tech'
 
-  def yaku
-    open("#{Rails.root}/public/images/yaku/#{params[:id]}.jpg") do |data|
-      send_data(data.read, :disposition => "inline", :type => "image/jpeg")
+  def tech
+    case params[:tech]
+    when 'yaku', 'cut'
+      send_image "#{Rails.root}/public/image/#{params[:tech]}/#{params[:id]}.jpg"
     end
   end
 
@@ -91,11 +87,9 @@ class WebhookController < ApplicationController
         image.composite!(choice, 0, image.rows.to_i - 85, Magick::OverCompositeOp)
         recipe.main = image.to_blob
         send_data image.to_blob
-        recipe.save
+        #recipe.save
       rescue => e
-        open(recipe.image) do |data|
-          send_data(data.read, :disposition => "inline", :type => "image/jpeg")
-        end
+        send_image recipe.image
       end
     end
   end
@@ -107,6 +101,12 @@ class WebhookController < ApplicationController
   end
 
   private
+  def send_image fname
+    open(fname) do |data|
+      send_data(data.read, :disposition => "inline", :type => "image/jpeg")
+    end
+  end
+
   def client
     @client ||= Line::Bot::Client.new do |config|
       config.channel_id = CHANNEL_ID
