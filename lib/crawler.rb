@@ -15,6 +15,7 @@ class Crawler
   end
 
   def scrape
+    return unless is_allowed?
     @doc.xpath('//*[@class="contentsBox"]/div[@class="catePopuRank"]/ol').each do |node|
       li_inner_recipe(node)
     end
@@ -42,10 +43,11 @@ class Crawler
       id = link.match(/\/(\d+)\//)[1]
       image = li_node.xpath('div[@class="cateRankImage"]//img').attr('src').value.sub(/\?thum=\d+/, '')
       name = li_node.xpath('div[@class="cateRankTtl"]').text
-      @results.push({image: image, name: name, link: link, id: id})
       unless Recipe.exists?(rid: id)
         recipe = Recipe.new(image: image, name: name, rid: id)
-        recipe.save
+        if recipe.save
+          @results.push({image: image, name: name, link: link, id: id})
+        end
       end
     end
   end
