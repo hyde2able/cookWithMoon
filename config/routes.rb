@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   # recipe
   get '/recipe/:rid', to: 'recipes#show'
   get '/recipe/:rid/materials', to: 'materials#index'
-  get '/tech/:tech/:id', to: 'recipes#tech'
   get '/recipe/:rid/share', to: 'recipes#share'
+
+  # tech
+  get '/tech/:tech/:id', to: 'techs#show'
+  get '/techs', to: 'techs#index'
 end
