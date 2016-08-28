@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'techgit/s'
+
   post '/callback', to: 'webhook#callback'
   get '/search/:keyword', to: 'webhook#search'
   get '/images/:rid/:size', to: 'webhook#image'

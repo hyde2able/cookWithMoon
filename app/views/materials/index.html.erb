@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes">
-  <title><%= title %></title>
+  <title><%= @recipe.name + 'の材料' %></title>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
   <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -114,30 +114,30 @@
 </head>
 <body>
   <header>
-    <h1 class="title"><%= title %></h1>
+    <h1 class="title"><%= @recipe.name %></h1>
     <p class="sub-title">
-      <span class="sub time"><i class="fa fa-clock-o"></i><%= time %></span>
-      <span class="sub fee"><i class="fa fa-jpy"></i><%= fee %></span>
+      <span class="sub time"><i class="fa fa-clock-o"></i><%= @recipe.time %></span>
+      <span class="sub fee"><i class="fa fa-jpy"></i><%= @recipe.fee %></span>
     </p>
-    <% if image.size != 0 %>
+    <% if @recipe.image.present? %>
       <div class="image-wrapper">
-        <div class="image" style="background-image:url(<%= image %>)"></div>
+        <div class="image" style="background-image:url(<%= @recipe.image %>)"></div>
       </div>
     <% end %>
   </header>
   <div id="contents">
     <article class="recipe">
       <div class="recipe-header">
-        材料(<%= portion %>)
+        材料(<%= @recipe.portion %>)
       </div>
         <ul class="materials">
-          <% materials.each do |material| %>
+          <% @materials.each do |material| %>
             <li class="material">
-              <input type="checkbox" name="check" id="<%= material[2] %>" />
+              <input type="checkbox" name="check" id="<%= material.name %>" />
               <span class="checkbox-icon"></span>
-              <label for="<%= material[2] %>">
-                <span class="material_name"><%= material[0].sub(/＊/, '') %></span>
-                <span class="material_content"><%= material[1] %></span>
+              <label for="<%= material.name %>">
+                <span class="material_name"><%= material.name.sub(/＊/, '') %></span>
+                <span class="material_content"><%= material.content %></span>
               </label>
             </li>
           <% end %>

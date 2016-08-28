@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes">
-  <title><%= name %></title>
+  <title><%= @tech.name %></title>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
   <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -57,16 +57,16 @@
 </head>
 <body>
   <header>
-    <h1 class="title"><%= name %></h1>
-    <% if image.size != 0 %>
+    <h1 class="title"><%= @tech.name %></h1>
+    <% if @tech.image.present? %>
       <div class="figure">
-        <div class="figure-image" style="background-image:url(<%= image %>)"></div>
+        <div class="figure-image" style="background-image:url(<%= @tech.image %>)"></div>
       </div>
     <% end %>
   </header>
   <div id="contents">
     <article class="recipe">
-      <p><%= explanation %></p>
+      <p><%= @tech.explanation %></p>
     </article>
   </div>
 </body>
