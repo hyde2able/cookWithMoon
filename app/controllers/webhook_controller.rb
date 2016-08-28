@@ -1,3 +1,4 @@
+require "#{Rails.root}/lib/line_client"
 require 'line/bot'
 require 'RMagick'
 
