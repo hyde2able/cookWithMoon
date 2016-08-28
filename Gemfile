@@ -35,6 +35,14 @@ gem 'anemone'
 gem 'line-bot-api'
 gem "rmagick", '~> 2.13.1', :require => 'RMagick'
 
+# DB
+gem 'mongoid'
+gem 'moped'
+gem 'bson_ext'
+gem 'redis' # => weeklyPVなどの実装のため
+gem 'redis-namespace' # => redisにnamespaceを
+gem 'dalli' # => memchacheで使用
+
 
 group :development, :test do
   gem 'byebug', platform: :mri

@@ -15,7 +15,6 @@ module CookWithMoon
     # DB保存時のタイムゾーンをJSTに変更
     config.active_record.default_timezone = :local
 
-    config.generators.template_engine = :slim
     config.active_job.queue_adapter = :sidekiq
 
     config.generators do |g|
