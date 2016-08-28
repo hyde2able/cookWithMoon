@@ -37,7 +37,7 @@ namespace :recipes do
   desc "レシピを補完"
   task completion: :environment do
     puts "START"
-    recipes = Recipe.all
+    recipes = Recipe.limit(2)
     count = recipes.count
     
     recipes.each_with_index do |recipe, r_index|
@@ -69,6 +69,7 @@ namespace :recipes do
                 material.quantity_int = $1.to_i
               end
               material.recipe_id = recipe.id
+              p material
               material.save
             end
           end
@@ -77,6 +78,7 @@ namespace :recipes do
             Step.transaction do
               step = Step.new(image: pro['image'], content: pro['operation'], turn: index)
               step.recipe_id = recipe.id
+              p step
               step.save
             end
           end
