@@ -1,6 +1,3 @@
-# encoding: utf-8
-require "#{Rails.root}/lib/line_client"
-require "#{Rails.root}/lib/crawler"
 require 'line/bot'
 require 'RMagick'
 
