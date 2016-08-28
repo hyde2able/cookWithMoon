@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'materials/index'
+
   get 'recipes/show'
 
   get 'recipes/share'
