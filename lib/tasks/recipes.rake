@@ -39,39 +39,52 @@ namespace :recipes do
     puts "START"
     recipes = Recipe.all
     count = recipes.count
+    
     recipes.each_with_index do |recipe, r_index|
       puts "#{(r_index+1) * 100/count}%"
       next if recipe.materials.count != 0 && recipe.steps.count != 0
+
       uri = URI.parse("https://evening-harbor-95566.herokuapp.com/#{recipe.rid}")
       json = Net::HTTP.get(uri)
       result = JSON.parse(json)
       r = result['recipe']
+
       begin
         Recipe.transaction do
           recipe.portion = r['membernum']
           recipe.time = r['time']
+          if /(\d+?)分/ =~ recipe.time
+            recipe.time_int = $1.to_i
+          end
           recipe.fee = r['fee']
+          if /(\d+?)円/ =~ recipe.time
+            recipe.fee_int = $1.to_i
+          end
           recipe.description = r['explanation']
 
-          r['material'].count.times do |i|
+          r['material']['name'].count.times do |i|
             Material.transaction do
               material = Material.new(name: r['material']['name'][i], quantity: r['material']['quantity'][i])
-              material.recipe = recipe
+              if /(\d+?)/ =~ material.quantity
+                material.quantity_int = $1.to_i
+              end
+              material.recipe_id = recipe.id
               material.save
             end
           end
+
           r['process'].each_with_index do |pro, index|
             Step.transaction do
               step = Step.new(image: pro['image'], content: pro['operation'], turn: index)
-              step.recipe = recipe
+              step.recipe_id = recipe.id
               step.save
             end
           end
-          recipe.save
-          p recipe
+
+          p recipe if recipe.save
         end
       rescue
-        puts recipe.id
+        puts "#{recipe.id}を補完できませんでした。"
       end
     end
     puts "END"
