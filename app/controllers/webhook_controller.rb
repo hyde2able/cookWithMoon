@@ -41,7 +41,7 @@ class WebhookController < ApplicationController
   def image
     recipe = Recipe.find_by(rid: params[:rid])
 
-    if recipe.main.present?
+    if recipe.try(:main).present?
       send_data(recipe.main, :disposition => "inline", :type => "image/jpeg")
     else
       begin
