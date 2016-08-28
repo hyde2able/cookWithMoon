@@ -28,7 +28,7 @@ class LineClient
           if /次へ\(手順(\d+)へ\)/ =~ @message.content[:text]
             next_step $1.to_i
           elsif /諦める/ =~ @message.content[:text]
-            recipe = Recipe.find_by(rid: @user.r_id)
+            recipe = Recipe.find_by(rid: @user.rid)
             send_text """#{recipe.name}のクッキングを途中で終了したぜ􀄃􀇓Moon unamused􏿿
 人間生きてりゃいろいろあるよな！􀂔
 よくここまでがんばった􀁼切り替えて、次いこ次！􀁹
@@ -158,7 +158,7 @@ class LineClient
   def start_cooking name
     @user.cook = true
     @recipe = Recipe.find_by(name: name)
-    @user.r_id = @recipe.rid
+    @user.rid = @recipe.rid
     @user.now_step = 0
     @user.max_step = @recipe.steps.count
     @user.save
@@ -166,7 +166,7 @@ class LineClient
 
   # 次のステップへ
   def next_step num
-    @recipe = Recipe.find_by(rid: @user.r_id) 
+    @recipe = Recipe.find_by(rid: @user.rid) 
     step = @recipe.steps[num - 1]
 
     send_step(step)
@@ -179,7 +179,7 @@ class LineClient
   def end_cooking
     @user.cook = false
     @user.now_step = nil
-    @user.r_id = nil
+    @user.rid = nil
     @user.max_step = nil
     @user.save
   end
@@ -221,7 +221,7 @@ class LineClient
         alt_text: "次へ(手順#{@user.now_step+1}へ)"
       )
     else
-      recipe = Recipe.find_by(rid: @user.r_id)
+      recipe = Recipe.find_by(rid: @user.rid)
       send_text("""お！完成したぞ！！􀂓􀂓
 大変だったな􀂔よくがんばったな􀂔
 ぜひ作った料理🍳をみんなにシェアしようぜ！􀂍
@@ -259,7 +259,7 @@ class LineClient
   end
 
   def send_giveup
-    recipe = Recipe.find_by(rid: @user.r_id)
+    recipe = Recipe.find_by(rid: @user.rid)
     @client.rich_message.set_action(
       GIVEUP: {
         text: 'あきらめる',
