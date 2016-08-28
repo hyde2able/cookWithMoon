@@ -49,7 +49,7 @@ namespace :recipes do
       result = JSON.parse(json)
       r = result['recipe']
 
-      begin
+      #begin
         Recipe.transaction do
           recipe.portion = r['membernum']
           recipe.time = r['time']
@@ -85,9 +85,9 @@ namespace :recipes do
 
           p recipe if recipe.save
         end
-      rescue
-        puts "#{recipe.id}を補完できませんでした。"
-      end
+      #rescue
+      #  puts "#{recipe.id}を補完できませんでした。"
+      #end
     end
     puts "END"
   end
