@@ -63,24 +63,20 @@ namespace :recipes do
           recipe.description = r['explanation']
 
           r['material']['name'].count.times do |i|
-            Material.transaction do
-              material = Material.new(name: r['material']['name'][i], quantity: r['material']['quantity'][i])
-              if /(\d+?)/ =~ material.quantity
-                material.quantity_int = $1.to_i
-              end
-              material.recipe_id = recipe.id
-              p material
-              material.save
+            material = Material.new(name: r['material']['name'][i], quantity: r['material']['quantity'][i])
+            if /(\d+?)/ =~ material.quantity
+              material.quantity_int = $1.to_i
             end
+            material.recipe_id = recipe.id
+            p material
+            material.save
           end
 
           r['process'].each_with_index do |pro, index|
-            Step.transaction do
-              step = Step.new(image: pro['image'], content: pro['operation'], turn: index)
-              step.recipe_id = recipe.id
-              p step
-              step.save
-            end
+            step = Step.new(image: pro['image'], content: pro['operation'], turn: index)
+            step.recipe_id = recipe.id
+            p step
+            step.save
           end
 
           p recipe if recipe.save
