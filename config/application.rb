@@ -20,5 +20,7 @@ module CookWithMoon
     config.generators do |g|
       g.orm :active_record
     end
+
+    config.autoload_paths += Dir["#{config.root}/lib/**/*"]
   end
 end
