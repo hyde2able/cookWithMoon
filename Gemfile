@@ -37,6 +37,7 @@ gem "rmagick", '~> 2.13.1', :require => 'RMagick'
 
 # DB
 # gem 'mongoid', git: 'https://github.com/estolfo/mongoid.git', branch: 'MONGOID-4218-rails-5'
+gem 'mongoid', git: 'https://github.com/mongodb/mongoid.git'
 # gem 'moped'
 gem 'redis' # => weeklyPVなどの実装のため
 gem 'redis-namespace' # => redisにnamespaceを

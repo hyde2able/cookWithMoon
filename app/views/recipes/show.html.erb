@@ -63,24 +63,53 @@
   .recipe-sub-header {
     padding: 10px;
   }
-  .materials {
-    padding: 0;
+  .steps {
     margin: 0;
-    list-style-type: none;
+    padding: 0;
+    counter-reset: li;
+    list-style: none;
+    padding-left: 0;
   }
-  .material {
-    padding: 15px 10px;
+  .steps .step {
     position: relative;
+    padding-left: 2.5em;
+    border-bottom: 1px dotted #ccc;
+    margin-top: 5px;
+    -webkit-background-size: 5px 2px;
+    -moz-background-size: 5px 2px;
+    -o-background-size: 5px 2px;
+    background-size: 5px 2px;
+    overflow: auto;
+  }
+  .steps .step:before {
+    content: counter(li) "";
+    counter-increment: li;
+    position: absolute;
+    left: 5px;
+    width: 1.8em;
+    height: 1.8em;
+    background: #ddd;
+    color: #333;
+    line-height: 1.8;
+    text-align: center;   
+  }
+  .steps .step .figure {
+    margin-right: 10px;
     display: block;
-    vertical-align: middle;
-    border-bottom: 1px solid #ccc;
+    float: left;
+    width: 150px;
+    height: auto;
   }
-  .material_name {
-    font-weight: bold;
+  .figure .figure-image {
+    width: 100%;
+    height: auto;
   }
-  .material_content {
-    float: right;
-    font-weight: bold;
+  .note {
+    padding-right: 5px;
+    margin: 5px;
+    color: #665533;
+    font-size: 16px;
+    word-wrap: break-word;
   }
   .image-wrapper {
     position: relative;
@@ -91,23 +120,6 @@
     width: 100%;
     height: 250px;
     background-size: cover;
-  }
-  .check {
-    display: none;
-  }
-  .check + .checkbox-icon {
-    position: relative;
-    vertical-align: middle;
-  }
-  .check + .checkbox-icon:before {
-    content: "\f372";
-    font-family: "Ionicons";
-    color: #ccc;
-    font-size: 22px;
-  }
-  .check:checked + .checkbox-icon:before {
-    content: "\f374";
-    color: #17bcdf;
   }
   --> 
   </style>
@@ -128,21 +140,20 @@
   <div id="contents">
     <article class="recipe">
       <div class="recipe-header">
-        材料(<%= portion %>)
+        作り方
       </div>
-        <ul class="materials">
-          <% materials.each do |material| %>
-            <li class="material">
-              <input type="checkbox" name="check" id="<%= material[2] %>" />
-              <span class="checkbox-icon"></span>
-              <label for="<%= material[2] %>">
-                <span class="material_name"><%= material[0].sub(/＊/, '') %></span>
-                <span class="material_content"><%= material[1] %></span>
-              </label>
-            </li>
-          <% end %>
-        </ul>
-      </section>
+      <ol class="steps">
+        <% steps.each do |step| %>
+          <li class="step">
+            <% if step[1].size != 0 %>
+              <div class="figure">
+                <img src="<%= step[1] %>" class="figure-image" />
+              </div>
+            <% end %>
+            <p class="note"><%= step[2] %></p> 
+          </li>
+        <% end %>
+      </ol>
     </article>
   </div>
 </body>
