@@ -37,7 +37,7 @@ namespace :recipes do
   desc "レシピを補完"
   task completion: :environment do
     puts "START"
-    recipes = Recipe.limit(2)
+    recipes = Recipe.all
     count = recipes.count
     
     recipes.each_with_index do |recipe, r_index|
