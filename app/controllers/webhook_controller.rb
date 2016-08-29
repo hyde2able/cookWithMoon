@@ -65,7 +65,7 @@ class WebhookController < ApplicationController
         #end
 
         # 文字
-        #draw.annotate(image, 0, 0, 5, 5, recipe.name) do
+        # draw.annotate(image, 0, 0, 5, 5, recipe.name) do
           #self.font_family = "#{Rails.root}/publick/fonts/font.ttf"
           #self.font_family = "#{Rails.root}/fonts/font.otf"
         #  self.font_family = 'MicrosoftSansSerif'
@@ -73,7 +73,7 @@ class WebhookController < ApplicationController
         #  self.stroke    = 'transparent'             # フォント縁取り色(透過)
         #  self.pointsize = 50                        # フォントサイズ(16pt)
         #  self.gravity   = Magick::NorthWestGravity  # 描画基準位置(左上)
-        #end
+        # end
       
         # 画像生成
         # image.write("temp.png")

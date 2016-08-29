@@ -60,60 +60,48 @@ class LineClient
             start_cooking($1)
             next_step 1
           elsif /おすすめ|オススメ|お腹|空いた|何か/ =~ @message.content[:text]
-            recipes = Recipe.sh.limit(2)
-            recipes.each_with_index do |recipe, index|
-              if index == 0
-                message = "#{recipe.name}つくらないかい？？􀂌"
-              else
-                message = "他に#{recipe.name}とかどうかな??􀂌"
-              end
-              message += "所要時間は#{recipe.time}" if recipe.time.present?
-              if recipe.fee.present?
-                message += "\n費用は#{recipe.fee}だぜ！􀂍"
-              else
-                message += "だぜ！􀂍\nすまんが、費用はわからない􀁼\n【レシピ】をタップしてみると、何かわかるかもしれないぞ！􀂎"
-              end
-              send_text message
-              send_choice recipe
-            end
-
-            # 更新
-            recipes.each do |r|
-              r.touch
-              r.save
-            end
+            recommend_recipes recommends
+          elsif /(\d+?)円/ =~ @message.content[:text]
+            recommend_recipes reasonable_recipes($1.to_i)
           else
-            recipes = Recipe.like(@message.content[:text]).sh.limit(2)
-            if recipes.count == 0
-              when_nothing # in private
-            else
-              recipes.each_with_index do |recipe, index|
-                if index == 0
-                  message = "#{recipe.name}つくらないかい？？􀂌\n"
-                else
-                  message = "他に#{recipe.name}とかどうかな??􀂌\n"
-                end
-                message += "所要時間は#{recipe.time}" if recipe.time.present?
-                if recipe.fee.present?
-                  message += "\n費用は#{recipe.fee}だぜ！􀂍"
-                else
-                  message += "だぜ！􀂍\nすまんが、費用はわからない􀁼\n【レシピ】をタップしてみると、何かわかるかもしれないぞ！􀂎"
-                end
-                send_text message
-                send_choice recipe
-              end
-              # 更新
-              recipes.each do |r|
-                r.touch
-                r.save
-              end
-            end
+            recommend_recipes recipes_like(@message.content[:text])
           end
         when Line::Bot::Message::Sticker
           send_text 'okok'      
         end
       end
     end 
+  end
+
+
+  # おすすめ
+  def recommends
+    Recipe.sh.limit(2)
+  end
+
+  # 名前検索
+  def recipes_like keyword
+    Recipe.like(keyword).sh.limit(2)
+  end
+
+  # 値段で検索
+  def reasonable_recipes price
+    Recipe.price_like(price).sh.limit(2)
+  end
+
+  # 料理を紹介する
+  def recommend_recipes recipes
+    recipes.each_with_index do |recipe, index|
+      message = (index == 0) ? "#{recipe.name}つくらないかい？？􀂌" : "他に#{recipe.name}とかどうかな??􀂌"
+      message += "所要時間は#{recipe.time}" if recipe.time.present?
+      message += recipe.fee.present? ? "\n費用は#{recipe.fee}だぜ！􀂍" :
+        "だぜ！􀂍\nすまんが、費用はわからない􀁼\n【レシピ】をタップしてみると、何かわかるかもしれないぞ！􀂎"
+      send_text message
+      send_choice recipe
+
+      r.touch # 更新
+      r.save
+    end
   end
 
   # テクニックを補完
