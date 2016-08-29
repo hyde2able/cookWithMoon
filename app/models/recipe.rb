@@ -12,8 +12,8 @@
 
 class Recipe < ApplicationRecord
   scope :like, -> (keyword) { where("name like ? or description like ?", "%#{keyword}%", "%#{keyword}%") }
-  scope :price_like, -> (price) { where("fee_int < ?, fee like ?", price, "%#{price}%")}
-  scope :time_like, -> (time) { where("time_int < ?, time like ?", time, "%#{time}%") }
+  scope :price_like, -> (price) { where("fee_int < ? or fee like ?", price, "%#{price}%") }
+  scope :time_like, -> (time) { where("time_int < ? or time like ?", time, "%#{time}%") }
   scope :sh, -> { order('updated_at ASC') }
   
   def materials
