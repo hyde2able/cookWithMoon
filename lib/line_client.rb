@@ -63,6 +63,8 @@ class LineClient
             recommend_recipes recommends
           elsif /(\d+?)円/ =~ @message.content[:text]
             recommend_recipes reasonable_recipes($1.to_i)
+          elsif /(\d+?)分/ =~ @message.content[:text]
+            recommend_recipes timely_recipes($1.to_i)
           else
             recommend_recipes recipes_like(@message.content[:text])
           end
@@ -82,6 +84,11 @@ class LineClient
   # 名前検索
   def recipes_like keyword
     Recipe.like(keyword).sh.limit(2)
+  end
+
+  # 時間で検索
+  def timely_recipes time
+    Recipe.time_like(time).sh.limit(2)
   end
 
   # 値段で検索
