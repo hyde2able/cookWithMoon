@@ -119,10 +119,6 @@
 <body>
   <header>
     <h1 class="title"><%= @recipe.name %></h1>
-    <p class="sub-title">
-      <span class="sub time"><i class="fa fa-clock-o"></i><%= @recipe.time %></span>
-      <span class="sub fee"><i class="fa fa-jpy"></i><%= @recipe.fee %></span>
-    </p>
     <% if @recipe.time && @recipe.fee %>
       <p class="sub-title">
         <% if @recipe.time.present? %>
