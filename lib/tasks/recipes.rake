@@ -57,7 +57,7 @@ namespace :recipes do
             recipe.time_int = $1.to_i
           end
           recipe.fee = r['fee']
-          if /(\d+?)円/ =~ recipe.time
+          if /(\d+?)円/ =~ recipe.fee
             recipe.fee_int = $1.to_i
           end
           recipe.description = r['explanation']
