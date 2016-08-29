@@ -19,6 +19,6 @@ class Recipe < ApplicationRecord
     Material.where(recipe_id: self.id)
   end
   def steps
-    Step.where(recipe_id: self.id).desc(:turn)
+    Step.where(recipe_id: self.id).asc(:turn)
   end
 end
