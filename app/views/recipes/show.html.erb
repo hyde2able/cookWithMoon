@@ -121,16 +121,26 @@
     height: 250px;
     background-size: cover;
   }
+  .description {
+    padding: 10px;
+    font-size: 13px;
+  }
   --> 
   </style>
 </head>
 <body>
   <header>
     <h1 class="title"><%= @recipe.name %></h1>
-    <p class="sub-title">
-      <span class="sub time"><i class="fa fa-clock-o"></i><%= @recipe.time %></span>
-      <span class="sub fee"><i class="fa fa-jpy"></i><%= @recipe.fee %></span>
-    </p>
+    <% if @recipe.time && @recipe.fee %>
+      <p class="sub-title">
+        <% if @recipe.time.present? %>
+          <span class="sub time"><i class="fa fa-clock-o"></i><%= @recipe.time %></span>
+        <% end %>
+        <% if @recipe.fee.present? %>
+          <span class="sub fee"><i class="fa fa-jpy"></i><%= @recipe.fee %></span>
+        <% end %>
+      </p>
+    <% end %>
     <% if @recipe.image.present? %>
       <div class="image-wrapper">
         <div class="image" style="background-image:url(<%= @recipe.image %>)"></div>
@@ -138,6 +148,9 @@
     <% end %>
   </header>
   <div id="contents">
+    <article class="description">
+      <p><%= @recipe.description %></p>
+    </article>
     <article class="recipe">
       <div class="recipe-header">
         作り方
