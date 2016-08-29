@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=10.0, user-scalable=yes">
-  <title><%= @tech.name %></title>
+  <title>料理テクニック一覧<</title>
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
   <!--[if lt IE 9]>
   <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -39,43 +39,51 @@
     border-top: 1px solid #ccc;
     border-bottom: 2px solid #ccc;
   }
-  .recipe {
-    padding: 10px;
-  }
-  .figure {
-    width: 100%;
-    height: 250px;
-    position: relative;
-  }
-  .figure .figure-image {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-  }
   .techs {
-    text-align: center;
-    border-top: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    padding: 5px;
-    text-decoration: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  .techs .tech {
+    position: relative;
+    padding-left: 2.5em;
+    border-bottom: 1px dotted #ccc;
+    margin-top: 5px;
+    padding-left: 70px;
+    height: 50px;
+    line-height: 50px;
+  }
+  .tech .figure {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 5px;
+    height: 40px;
+  }
+  .figure-image {
+    height: 100%;
+    width: auto;
   }
   --> 
   </style>
 </head>
 <body>
   <header>
-    <h1 class="title"><%= @tech.name %></h1>
-    <% if @tech.image.present? %>
-      <div class="figure">
-        <div class="figure-image" style="background-image:url(<%= @tech.image %>)"></div>
-      </div>
-    <% end %>
+    <h1 class="title">料理テクニック一覧</h1>
   </header>
   <div id="contents">
-    <article class="recipe">
-      <p><%= @tech.explanation %></p>
-    </article>
-    <p class="techs"><%= link_to '料理テクニック一覧', '/techs' %></p>
+    <ul class="techs">
+      <% @techs.each do |tech| %>
+        <li class="tech">
+          <% if tech.image.present? %>
+            <div class='figure'>
+              <img src="<%= tech.image %>" class="figure-image" />
+            </div>
+          <% end %>
+          <%= link_to tech.name, tech_url(tech.name) %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </body>
 </html>
