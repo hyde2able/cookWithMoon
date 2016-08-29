@@ -106,8 +106,8 @@ class LineClient
       send_text message
       send_choice recipe
 
-      r.touch # 更新
-      r.save
+      recipe.touch # 更新
+      recipe.save
     end
   end
 
